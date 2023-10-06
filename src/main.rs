@@ -3,8 +3,7 @@ mod simulation;
 use bevy::{prelude::*, window::PrimaryWindow};
 use simulation::SimulationPlugin;
 
-// const DT: f32 = 1e-3;
-const DT: f32 = 0.01;
+const DT: f32 = 1. / 120.;
 
 fn main() {
     App::new()
@@ -12,7 +11,7 @@ fn main() {
             brightness: 0.03,
             ..default()
         })
-        .insert_resource(ClearColor(Color::SEA_GREEN))
+        .insert_resource(ClearColor(Color::DARK_GRAY))
         .insert_resource(FixedTime::new_from_secs(DT))
         .add_systems(Startup, spawn_camera)
         .add_plugins((DefaultPlugins, SimulationPlugin))
