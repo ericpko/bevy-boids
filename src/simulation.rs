@@ -1,14 +1,15 @@
 // https://vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html
 // Dan Shiffman -- nature of code book
+// https://github.com/Epirius/BoidRs/blob/main/src/main.rs
 // #![allow(unused)]
 
 use bevy::{prelude::*, utils::HashMap, window::PrimaryWindow};
 
 // Constants
 const NUM_BOIDS: u32 = 300;
-const BOID_SIZE: f32 = 16.0; // number of pixels
+const BOID_SIZE: f32 = 32.0; // number of pixels
 const TURN_FACTOR: f32 = 0.2;
-const VISUAL_RANGE: f32 = 40.0; // pixels
+const VISUAL_RANGE: f32 = 32.0; // pixels
 const PROJECTED_RANGE: f32 = 8.0; // pixels
 const CENTERING_FACTOR: f32 = 0.0005;
 const AVOID_FACTOR: f32 = 0.05;
@@ -74,7 +75,7 @@ fn spawn_boids(
     asset_server: Res<AssetServer>,
 ) {
     let window = window_query.get_single().unwrap();
-    let texture = asset_server.load("sprites/ship_B.png");
+    let texture = asset_server.load("sprites/ship_K.png");
 
     for _ in 0..NUM_BOIDS {
         let x = (BOID_SIZE / 2.0) + rand::random::<f32>() * (window.width() - BOID_SIZE);
@@ -96,7 +97,7 @@ fn spawn_boids(
             .spawn(BoidBundle {
                 sprite: SpriteBundle {
                     transform: Transform::from_xyz(x, y, 0.0)
-                        .with_scale(Vec3::new(0.125, 0.125, 1.0)),
+                        .with_scale(Vec3::new(0.25, 0.25, 1.0)),
                     texture: texture.clone(),
                     ..default()
                 },
@@ -362,6 +363,13 @@ fn update_position(
         t_i.translation.y = r_i.y;
 
         // rotate according to the velocity vector
-        // t_i.rotate_z(u_i.y.atan2(u_i.x));
+        // https://github.com/bevyengine/bevy/blob/main/examples/2d/rotation.rs
+        let u_i = u_i.normalize_or_zero();
+        let rotate_dir = Quat::from_rotation_arc(Vec3::Y, u_i.extend(0.));
+        t_i.rotation = rotate_dir;
+
+        // doesn't work for some reason?
+        // let angle = u_i.y.atan2(u_i.x);
+        // t_i.rotate_z(angle);
     }
 }

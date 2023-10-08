@@ -3,7 +3,7 @@ mod simulation;
 use bevy::{prelude::*, window::PrimaryWindow};
 use simulation::SimulationPlugin;
 
-const DT: f32 = 1. / 120.;
+const DT: f32 = 1. / 60.;
 
 fn main() {
     App::new()
