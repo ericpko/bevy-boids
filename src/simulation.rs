@@ -6,8 +6,8 @@
 use bevy::{prelude::*, utils::HashMap, window::PrimaryWindow};
 
 // Constants
-const NUM_BOIDS: u32 = 300;
-const BOID_SIZE: f32 = 32.0; // number of pixels
+const NUM_BOIDS: u32 = 400;
+const BOID_SIZE: f32 = 16.0; // number of pixels
 const TURN_FACTOR: f32 = 0.2;
 const VISUAL_RANGE: f32 = 32.0; // pixels
 const PROJECTED_RANGE: f32 = 8.0; // pixels
@@ -97,7 +97,7 @@ fn spawn_boids(
             .spawn(BoidBundle {
                 sprite: SpriteBundle {
                     transform: Transform::from_xyz(x, y, 0.0)
-                        .with_scale(Vec3::new(0.25, 0.25, 1.0)),
+                        .with_scale(Vec3::new(0.125, 0.125, 1.0)),
                     texture: texture.clone(),
                     ..default()
                 },
